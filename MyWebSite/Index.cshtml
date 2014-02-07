@@ -1,0 +1,66 @@
+﻿@{
+    //validation här! =)
+    Validation.RequireField("name", "Required Filed");
+    Validation.RequireField("department", "Required Filed");
+    Validation.RequireField("salary", "Required Filed");
+    Validation.Add("salary", Validator.Integer("Must be an interger"));
+    Validation.RequireField("gender", "Required Filed");
+    Validation.RequireField("role", "Required Filed");
+    
+    if (IsPost && Validation.IsValid())
+    {
+        try
+        {
+            var name = Request.Form["name"];
+            var department = Request.Form["department"];
+            var salary = int.Parse(Request.Form["salary"]);
+            var gender = Request.Form["gender"];
+            var role = Request.Form["role"];
+
+            var db = Database.Open("EmployeeDB");
+            var insertCommand = "INSERT INTO Employees (Name, Department, Salary, Gender, RoleName) VALUES(@0, @1, @2, @3, @4)";
+            db.Execute(insertCommand, name, department, salary, gender, role);
+
+            var allemp = db.Query("select * from Employees");
+            
+            foreach(var row in allemp)
+            {
+                <p>@row.Name</p>
+            }
+            
+        }
+        catch (Exception e)
+        {
+            <p>@e.Message Du är galen =)</p>
+        }
+
+    }
+    else
+    {
+        <p>@Html.ValidationSummary()</p>
+<form method="post">
+    <fieldset>
+      <legend>Empolyees</legend>
+      <p><label for="name">Name:</label>
+         <input type="text" name="name" value="@Request.Form["name"]" />
+      </p>
+
+      <p><label for="department">Department:</label>
+         <input type="text" name="department" value="@Request.Form["department"]" />
+      </p>
+
+      <p><label for="salary">Salary:</label>
+         <input type="text" name="salary" value="@Request.Form["salary"]" />
+      </p>
+
+        <p><label for="gender">Gender:</label>
+         <input type="text" name="gender" value="@Request.Form["gender"]" />
+      </p>
+        <p><label for="role">Role:</label>
+         <input type="text" name="role" value="@Request.Form["role"]" />
+      </p>
+      <p><input type="submit" name="buttonSubmit" value="Add Employee" /></p>
+    </fieldset>
+  </form>
+}
+}

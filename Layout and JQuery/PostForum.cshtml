@@ -1,0 +1,31 @@
+﻿@{
+    Page.Title = "Kontakta oss";
+    Validation.RequireField("title", "Required Filed");
+    Validation.RequireField("question", "Required Filed");
+    
+    if(IsPost && Validation.IsValid())
+    {
+        var title = Request.Form["title"];
+        var question = Request.Form["question"];
+
+        var db = Database.Open("ForumDB");
+        string query = "INSERT INTO ForumPosts (Title, content) VALUES(@0, @1)";
+        db.Execute(query, title, question);
+        
+        <p>Inserted post: @title with content: @question.Substring(0, (question.Length < 15 ? question.Length : 15)) ...<br /></p>
+        <p>To se post, go to <a href="ForumPosts">Forum posts</a></p>
+    }
+    else
+    {
+        <div>
+            @Html.ValidationSummary()
+            <form method="post">
+                Titel: <br /> <input type="text" name="title" value="@Request.Form["title"]" /> <br />
+                Fråga:<br /> <textarea name="question">@Request.Form["question"]</textarea> <br />
+                <input type="submit" value="Send" />
+            </form>
+        </div>
+    }
+}
+
+
