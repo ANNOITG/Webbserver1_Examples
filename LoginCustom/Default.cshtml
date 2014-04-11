@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="@Href("~/Content/Site.css")" type="text/css" />
+        <title>@Page.Title</title>
+    </head>
+    <body>
+        <h1>Home Page</h1>
+        <p>This is the home page.</p>
+
+        <div>
+          @if(WebSecurity.IsAuthenticated){
+            <p>Welcome, @WebSecurity.CurrentUserName</p>
+            <p><a href="@Href("~/Logout")">Log out</a></p>
+          }
+          else
+          {
+            @:<a href="@Href("~/Login")">Log in</a> |
+            <a href="@Href("~/Register")">Register</a>
+          }
+        </div>
+      <p>
+        <a href="@Href("~/Members/Members")">Members area</a>
+      </p>
+
+      <p>
+        <a href="@Href("~/Admin/ManageRoles")">Manage Roles</a> (must be logged in as the Admin user MikeP)
+      </p>
+
+    </body>
+</html>
