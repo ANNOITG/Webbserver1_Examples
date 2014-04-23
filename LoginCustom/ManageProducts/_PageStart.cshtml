@@ -1,6 +1,6 @@
-﻿@{
+﻿@*@{
     if(!Roles.IsUserInRole(WebSecurity.CurrentUserName, "Admin") && !WebSecurity.IsAuthenticated)
     {
         Response.SetStatus(HttpStatusCode.Forbidden);
     }
-}
+}*@

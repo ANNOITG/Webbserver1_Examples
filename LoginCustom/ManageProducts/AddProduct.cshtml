@@ -40,8 +40,9 @@
             Stock = Request.Form["Stock"];
 
             var db = Database.Open("StarterSite");
-            var insertCommand = "INSERT INTO Products (Name, ImagePath, ThumbImg, ProductInfo, ProductCategory, Price, Stock) VALUES(@0, @1, @2, @3, @4, @5, @6, @7)";
+            var insertCommand = "INSERT INTO Products (Name, ImagePath, ThumbImg, ProductInfo, ProductCategory, Price, Stock) VALUES(@0, @1, @2, @3, @4, @5, @6)";
             db.Execute(insertCommand, Name, imagePath, imageThumbPath, Info, Category, Price, Stock);
+            Response.Redirect("~/ManageProducts/ProductList.cshtml");
         }
     }
 }
@@ -84,18 +85,9 @@
 
         <p>
             <label for="Stock">Amount left:</label>
-            <input name="Stock" type="number" value="@Request.Form["Stock"] />
+            <input name="Stock" type="number" value="@Request.Form["Stock"]" />
         </p>
 
         <input type="submit" value="Submit" />
     </fieldset>
 </form>
-
-@if(imagePath != "") { 
-    <div class="result">
-        <img src="@imageThumbPath" alt="Thumbnail Image" />
-        <a href="@Html.AttributeEncode(imagePath)" target="_Self">
-            View full size
-        </a>
-    </div>
-}

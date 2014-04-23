@@ -1,0 +1,27 @@
+﻿@{
+    var db = Database.Open("CustomLoginSite");
+    var prodList = db.Query("SELECT * FROM Products");
+}
+
+<a href="@Href("~/ManageProducts/AddProduct.cshtml")">Add product</a>
+
+<table>
+    <tr>
+        <th>ThumbNail</th>
+        <th>Name</th>
+        <th>Info</th>
+        <th>Price</th>
+    </tr>
+    @foreach(var product in prodList)
+    {
+        <tr>
+            <td><img src="@Href("~/" + product.ThumbImg)" alt="Thumbnail missing" /></td>
+            <td>@product.Name</td>
+            <td>@product.ProductInfo</td>
+            <td>@product.Price</td>
+
+            <td><a href="@Href("~/ManageProducts/DeleteProduct.cshtml?ID=" + product.ProductID)">Delete ID: @product.ProductID</a></td>
+
+        </tr>
+    }
+</table>

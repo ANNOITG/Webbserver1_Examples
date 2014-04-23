@@ -1,0 +1,14 @@
+﻿@{
+    var pid = Request["ID"].AsInt();
+    try
+    {
+        var db = Database.Open("CustomLoginSite");
+        db.Query("Delete from Products where ProductID = " + pid);
+        
+        <p>Success deleting product. Return <a href="@Href("~/ManageProducts/ProductList.cshtml")">here</a></p>
+    }
+    catch
+    {
+        <p>ERROR DELETING PRODUCT WITH ID @Request["ID"]</p>
+    }
+}
