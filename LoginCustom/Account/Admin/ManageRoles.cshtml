@@ -5,7 +5,7 @@
   string[] roleNames = new string[1];
 
   // Need to manually query users because Membership.GetAllUsers is not working
-  var db = Database.Open("TestMembership");
+  var db = Database.Open("CustomLoginSite");
   var selectQueryString = "SELECT UserId, Email FROM UserProfile";
 
   if(IsPost)

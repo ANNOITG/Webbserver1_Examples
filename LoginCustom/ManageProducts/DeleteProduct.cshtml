@@ -1,14 +1,50 @@
 ﻿@{
     var pid = Request["ID"].AsInt();
+    
+    var delSucImg = false;
+    var delSucThumb = false;
+    var delSucRow = false;
+    
     try
     {
         var db = Database.Open("CustomLoginSite");
-        db.Query("Delete from Products where ProductID = " + pid);
+        var product = db.QuerySingle("Select * from products where ProductID = " + pid);
+
+        var fullpathThumb = Server.MapPath(product.ThumbImg);
+        var fullPathImage = Server.MapPath(product.ImagePath);
+        
+        db.Execute("Delete from Products where ProductID = " + pid);
+        delSucRow = true;
+        
+        if (File.Exists(fullPathImage))
+        {
+            File.Delete(fullPathImage);
+            delSucImg = true;
+        }
+        
+        if(File.Exists(fullpathThumb))
+        {
+            File.Delete(fullpathThumb);
+            delSucThumb = true;
+        }
         
         <p>Success deleting product. Return <a href="@Href("~/ManageProducts/ProductList.cshtml")">here</a></p>
     }
-    catch
+    catch (Exception e)
     {
-        <p>ERROR DELETING PRODUCT WITH ID @Request["ID"]</p>
+        if(!delSucRow)
+        {
+            <p>@e.Message</p>
+        }
+        
+        if(!delSucImg)
+        {
+            <p>Image not deleted from server or not found</p>
+        }
+        
+        if(!delSucThumb)
+        {
+            <p>Thumbnail not deleted from server or not found</p>
+        }
     }
 }

@@ -19,8 +19,8 @@
             <td>@product.Name</td>
             <td>@product.ProductInfo</td>
             <td>@product.Price</td>
-
-            <td><a href="@Href("~/ManageProducts/DeleteProduct.cshtml?ID=" + product.ProductID)">Delete ID: @product.ProductID</a></td>
+            <td><a href="@Href("~/ManageProducts/EditProduct.cshtml?ID=" + product.ProductID)">Edit</a></td>
+            <td><a href="@Href("~/ManageProducts/DeleteProduct.cshtml?ID=" + product.ProductID)">Delete</a></td>
 
         </tr>
     }

@@ -1,5 +1,5 @@
 ﻿ @{
-
+     
   var username = "";
   var password = "";
   var confirmPassword = "";
@@ -39,7 +39,11 @@
         WebSecurity.CreateUserAndAccount(username,password,null,false);
 
         WebSecurity.Login(username, password, true);
-
+          if(username == "anno@hotmail.com")
+          {
+            Roles.AddUserToRole(username, "Admin");
+          }
+          
         errorMessage = String.Format("{0} created.", username);
       }
     }
@@ -77,9 +81,9 @@
     </p>   
 
     <p>
-        <a href="@Href("~/Logout")">Log out</a>
+        <a href="@Href("~/Account/Logout")">Log out</a>
         <br/>
-        <a href="@Href("~/Home")">Home</a>
+        <a href="@Href("~/Default")">Home</a>
     </p>
 </form>
 

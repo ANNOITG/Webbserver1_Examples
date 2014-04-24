@@ -39,7 +39,7 @@
             Price = Request.Form["Price"];
             Stock = Request.Form["Stock"];
 
-            var db = Database.Open("StarterSite");
+            var db = Database.Open("CustomLoginSite");
             var insertCommand = "INSERT INTO Products (Name, ImagePath, ThumbImg, ProductInfo, ProductCategory, Price, Stock) VALUES(@0, @1, @2, @3, @4, @5, @6)";
             db.Execute(insertCommand, Name, imagePath, imageThumbPath, Info, Category, Price, Stock);
             Response.Redirect("~/ManageProducts/ProductList.cshtml");
